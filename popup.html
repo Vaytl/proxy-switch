@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>ProxySwitch</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ProxySwitch</h1>
+      <div class="status">
+        Status: <span id="status-indicator" class="status-pill status-off">Disabled</span>
+      </div>
+    </header>
+
+    <div id="status-message" class="status-message" style="display: none;"></div>
+
+    <div class="tab-buttons">
+      <button class="tab-button active" data-tab="config">Configuration</button>
+      <button class="tab-button" data-tab="usage">Usage</button>
+      <button class="tab-button" data-tab="about">About</button>
+    </div>
+
+    <div class="tab-content active" id="config">
+      <form id="proxyForm">
+        <div class="form-group">
+          <label for="protocol">Protocol:</label>
+          <select id="protocol" required>
+            <option value="http">HTTP</option>
+            <option value="https">HTTPS</option>
+            <option value="socks4">SOCKS4</option>
+            <option value="socks5">SOCKS5</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="server">Server:</label>
+          <input type="text" id="server" placeholder="proxy.example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="port">Port:</label>
+          <input type="number" id="port" placeholder="8080" required>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Username (optional):</label>
+          <input type="text" id="username" placeholder="username">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password (optional):</label>
+          <input type="password" id="password" placeholder="password">
+        </div>
+
+        <div class="button-group">
+          <button type="button" id="enableBtn" class="btn btn-primary">Enable Proxy</button>
+          <button type="button" id="disableBtn" class="btn btn-secondary">Disable Proxy</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="tab-content" id="usage">
+      <h2>How to Use</h2>
+      
+      <h3>Method 1: Using the Interface</h3>
+      <ol>
+        <li>Select the proxy protocol (HTTP, HTTPS, SOCKS4, SOCKS5)</li>
+        <li>Enter the proxy server address</li>
+        <li>Specify the port number</li>
+        <li>Add username and password if required</li>
+        <li>Click "Enable Proxy" to activate</li>
+      </ol>
+
+      <h3>Method 2: Using the Address Bar</h3>
+      <p>Type in your browser's address bar:</p>
+      <code>https://setproxy/server:port</code>
+      <p>Examples:</p>
+      <ul>
+        <li><code>https://setproxy/proxy.example.com:8080</code></li>
+        <li><code>https://setproxy/127.0.0.1:1080</code></li>
+      </ul>
+      <p>With protocol and authentication:</p>
+      <code>https://setproxy/server:port?protocol=socks5&username=user&password=pass</code>
+      <p>To disable the proxy, type:</p>
+      <code>https://disableproxy</code>
+    </div>
+
+    <div class="tab-content" id="about">
+      <h2>About ProxySwitch</h2>
+      <p>ProxySwitch is a browser extension that allows you to quickly switch between different proxy servers. It supports multiple proxy protocols and provides both interface and URL-based control methods.</p>
+      
+      <h3>Features:</h3>
+      <ul>
+        <li>Support for HTTP, HTTPS, SOCKS4, and SOCKS5 proxies</li>
+        <li>Quick proxy switching via address bar</li>
+        <li>Optional authentication support</li>
+        <li>Settings persistence between browser sessions</li>
+      </ul>
+
+      <p>Version: 1.0.0</p>
+      <p>© 2025 <a href="https://github.com/Vaytl" target="_blank">github.com/Vaytl</a></p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html> 
