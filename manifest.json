@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "ProxySwitch",
   "version": "1.0.0",
-  "description": "Quick and easy proxy server management with multiple protocol support",
+  "description": "Quick and easy proxy server management with protocol support",
   "permissions": [
     "proxy",
     "storage",

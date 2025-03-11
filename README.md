@@ -1,15 +1,15 @@
 # ProxySwitch
 
-A browser extension for quick and easy proxy server management. ProxySwitch allows you to easily switch between different proxy servers and protocols with a clean, user-friendly interface.
+A browser extension for quick and easy proxy server management. ProxySwitch allows you to easily enable or disable proxy connection with a clean, user-friendly interface.
 
 ## Features
 
-- Support for multiple proxy protocols:
+- Support for multiple protocols:
   - HTTP
   - HTTPS
   - SOCKS4
   - SOCKS5
-- Quick proxy switching via browser address bar
+- Quick proxy control via browser address bar
 - User-friendly interface for proxy configuration
 - Optional authentication support (username/password)
 - Settings persistence between browser sessions
@@ -52,15 +52,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 1.0.0 (2025)
   - Initial release
-  - Basic proxy management functionality
+  - Basic proxy management
   - Multiple protocol support
   - URL-based control
 
 ## Acknowledgments
 
-- Icon design by [Your Name]
 - Built with Chrome Extensions API
-- Inspired by the need for simple proxy management
 
 ## Support
 

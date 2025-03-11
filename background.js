@@ -1,74 +1,19 @@
-// Список доступных прокси серверов
-let proxyList = [];
-let currentProxyIndex = 0;
-let isProxyEnabled = false;
-
 // Global variable to store current proxy configuration
 let currentProxyConfig = null;
+let isProxyEnabled = false;
 
-// Загрузка сохраненных настроек при запуске
-chrome.storage.local.get(['proxyList', 'currentProxyIndex', 'isProxyEnabled', 'proxyConfig'], function(result) {
-  if (result.proxyList) {
-    proxyList = result.proxyList;
-  }
-  if (result.currentProxyIndex !== undefined) {
-    currentProxyIndex = result.currentProxyIndex;
-  }
-  if (result.isProxyEnabled !== undefined) {
-    isProxyEnabled = result.isProxyEnabled;
-  }
+// Load saved settings on startup
+chrome.storage.local.get(['proxyConfig', 'isProxyEnabled'], function(result) {
   if (result.proxyConfig) {
     currentProxyConfig = result.proxyConfig;
     if (currentProxyConfig.enabled) {
       enableProxy(currentProxyConfig);
     }
   }
+  if (result.isProxyEnabled !== undefined) {
+    isProxyEnabled = result.isProxyEnabled;
+  }
 });
-
-// Добавление нового прокси сервера
-function addProxy(proxy) {
-  proxyList.push(proxy);
-  chrome.storage.local.set({ proxyList: proxyList });
-  
-  if (proxyList.length === 1 && isProxyEnabled) {
-    enableProxy(proxy);
-  }
-}
-
-// Удаление прокси сервера
-function removeProxy(index) {
-  proxyList.splice(index, 1);
-  
-  if (index <= currentProxyIndex) {
-    currentProxyIndex = Math.max(0, Math.min(currentProxyIndex, proxyList.length - 1));
-  }
-  
-  chrome.storage.local.set({ 
-    proxyList: proxyList,
-    currentProxyIndex: currentProxyIndex
-  });
-  
-  if (isProxyEnabled && proxyList.length > 0) {
-    enableProxy(proxyList[currentProxyIndex]);
-  } else if (isProxyEnabled) {
-    disableProxy();
-  }
-}
-
-// Переключение на следующий прокси
-function rotateProxy() {
-  if (proxyList.length > 0) {
-    currentProxyIndex = (currentProxyIndex + 1) % proxyList.length;
-    chrome.storage.local.set({ currentProxyIndex: currentProxyIndex });
-    
-    if (isProxyEnabled) {
-      enableProxy(proxyList[currentProxyIndex]);
-    }
-    
-    return proxyList[currentProxyIndex];
-  }
-  return null;
-}
 
 // Enable proxy with the specified configuration
 async function enableProxy(config) {
@@ -238,31 +183,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             ...currentProxyConfig
           });
           break;
-          
-        case 'addProxy':
-          addProxy(request.proxy);
-          sendResponse({ success: true });
-          break;
-          
-        case 'removeProxy':
-          removeProxy(request.index);
-          sendResponse({ success: true });
-          break;
-          
-        case 'rotateProxy':
-          const nextProxy = rotateProxy();
-          sendResponse({ 
-            success: true, 
-            proxy: nextProxy 
-          });
-          break;
       }
     } catch (error) {
       console.error('Error handling message:', error);
-      sendResponse({ success: false, message: "Internal error" });
+      sendResponse({ success: false, message: error.message });
     }
   })();
-  
   return true; // Keep message channel open for async response
 });
 
